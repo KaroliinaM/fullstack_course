@@ -1,1 +1,1 @@
-# fullstack_course
+Kurssi Fullstack-websovelluskehitys
