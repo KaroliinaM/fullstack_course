@@ -12,7 +12,8 @@ const Statistics = ({hyvat, huonot, neutraalit}) =>{
 else {
 
 return(
- <div>
+ <table>
+ <tbody>
  <Statistic
  otsake="Hyvä"
  jaettava={hyvat}
@@ -43,22 +44,24 @@ return(
  jakaja={hyvat+huonot+neutraalit}
  lukutyyppi="prosenttia"
  />
-
- </div>
+</tbody>
+ </table>
 
 )}}
 
 const Statistic = ({otsake, jaettava, jakaja, lukutyyppi}) =>{
+  const otsikko=otsake + " : "
+
   if((lukutyyppi==="prosenttia"))
   {
 
-return (<div>{otsake} : {(100*Math.round(1000* (jaettava/jakaja))/1000) + " prosenttia"}</div>)
+return (<tr><td>{otsikko}</td><td>{(100*Math.round(1000* (jaettava/jakaja))/1000) + " prosenttia"}</td></tr>)
 }
 else if(lukutyyppi==="murtoluku") {
-  return(<div>{otsake} : {Math.round(10*jaettava/jakaja)/10}</div>)
+  return(<tr><td>{otsikko}</td><td>{Math.round(10*jaettava/jakaja)/10}</td></tr>)
 }
 else {
-  return(<div>{otsake} : {jaettava}</div>)
+  return(<tr><td>{otsikko}</td><td>{jaettava}</td></tr>)
 }
 }
 
@@ -88,7 +91,7 @@ class App extends React.Component {
   }
   klikHuono = () => {
     this.setState({
-      huono: this.state.huono +1,
+      huono: this.state.huono +1
 
     })
   }
@@ -99,6 +102,7 @@ class App extends React.Component {
   }
   render() {
     return (
+
       <div>
         <h1>Anna palautetta!</h1>
         <div>
@@ -122,6 +126,7 @@ class App extends React.Component {
         </div>
 
       </div>
+
     )
   }
 }
