@@ -95,12 +95,14 @@ class App extends React.Component {
         const changedContact={...person, number: this.state.newNumber}
 
 
-        axios
-          .put(url, changedContact)
-          .then(response => {
+        personService
+          .update(person.id, changedContact)
+          .then(changedContact => {
+            const persons=this.state.persons.filter(p=>p.id!=person.id)
             this.setState({
-              persons:this.state.persons.map(person=>person.id!== double.id ? person : changedContact)
+              persons: persons.concat(changedContact)
             })
+            this.showMessage(`${changedContact.name} tietoja muokattu`, 'msg')
           })
         }
 
