@@ -98,7 +98,7 @@ class App extends React.Component {
         personService
           .update(person.id, changedContact)
           .then(changedContact => {
-            const persons=this.state.persons.filter(p=>p.id!=person.id)
+            const persons=this.state.persons.filter(p=>p.id!==person.id)
             this.setState({
               persons: persons.concat(changedContact)
             })

@@ -1,6 +1,10 @@
 const express=require('express')
 const app=express()
 const bodyParser=require('body-parser')
+const cors = require('cors')
+
+app.use(cors())
+
 
 let notes = [
   {
@@ -48,7 +52,7 @@ const generateId=()=> {
 }
 app.post('/notes', (request, response)=> {
   const body=request.body
-  
+
   if(body.content===undefined) {
     return response.status(400).json({error: 'content missing'})
   }
