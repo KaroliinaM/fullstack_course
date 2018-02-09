@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/persons'
+const baseUrl = '/api/persons'
 
 const getAll = () => {
   const request= axios.get(baseUrl)
@@ -22,7 +22,7 @@ const update  = (id, newObject) => {
 }
 
 const deletion = (id) => {
-  const request = axios.delete(`http://localhost:3001/persons/${id}`)
+  const request = axios.delete(`${baseUrl}/${id}`)
   return request.then(response=>response.data)
 }
 
