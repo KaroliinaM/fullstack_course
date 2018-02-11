@@ -1,2 +1,2 @@
 npm run build
-cp -r build /home/kape/Documents/fullstack_backend/
+cp -r build /home/fs/kmietola/Documents/fullstack_backend/
