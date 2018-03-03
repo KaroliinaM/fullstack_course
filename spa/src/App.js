@@ -1,7 +1,9 @@
 import React from 'react'
 import Note from './components/Note'
+import Togglable from './components/Togglable'
 import noteService from './services/notes'
 import loginService from './services/login'
+import PropTypes from 'prop-types'
 
 const Notification =({message}) => {
   if(message===null) {
@@ -40,6 +42,12 @@ const LoginForm=({handleSubmit, handleChange, username, password})=> {
     </form>
   </div>
 )}
+LoginForm.propTypes={
+  handleSubmit: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  username: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired
+}
 const NoteForm=({onSubmit, handleChange, value})=> {
   return (
   <div>
@@ -55,32 +63,9 @@ const NoteForm=({onSubmit, handleChange, value})=> {
   </div>
   )
 }
-class Togglable extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state={
-      visible:false
-    }
-  }
-  toggleVisibility=()=>{
-    this.setState({visible: !this.state.visible})
-  }
-  render() {
-    const hideWhenVisible={ display: this.state.visible ? 'none' : '' }
-    const showWhenVisible={ display: this.state.visible ? '' : 'none' }
 
-    return(
-      <div>
-        <div style={hideWhenVisible}>
-          <button onClick={this.toggleVisibility}>{this.props.buttonLabel}</button>
-        </div>
-        <div style={showWhenVisible}>
-          {this.props.children}
-          <button onClick={this.toggleVisibility}>cancel</button>
-        </div>
-      </div>
-    )
-  }
+Togglable.propTypes = {
+  buttonLabel: PropTypes.string.isRequired
 }
 class App extends React.Component {
   constructor(props) {
