@@ -1,5 +1,5 @@
 import React from 'react'
-import actionFor from './actionCreators'
+import {noteCreation} from './../reducers/noteReducer'
 import PropTypes from 'prop-types'
 
 class NoteForm extends React.Component {
@@ -17,7 +17,7 @@ class NoteForm extends React.Component {
     event.preventDefault()
 
     this.context.store.dispatch(
-      actionFor.noteCreation(event.target.note.value)
+      noteCreation(event.target.note.value)
     )
     event.target.note.value=''
   }

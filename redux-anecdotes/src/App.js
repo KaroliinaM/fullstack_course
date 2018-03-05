@@ -1,18 +1,11 @@
 import React from 'react';
+import {createAnecdote} from './reducers/anecdoteReducer'
 
-const getId = () => (100000*Math.random()).toFixed(0)
 class App extends React.Component {
   addAnecdote=(event)=>{
     event.preventDefault()
     const content=event.target.anecdote.value
-    this.props.store.dispatch({
-      type: 'NEW',
-      data: {
-        content: content,
-        id: getId(),
-        votes:0
-      }
-    })
+    this.props.store.dispatch(createAnecdote(content))
     event.target.anecdote.value= ''
   }
   render() {
