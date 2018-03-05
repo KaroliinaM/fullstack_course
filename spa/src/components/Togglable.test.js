@@ -1,5 +1,5 @@
 import React from 'react'
-import {shallow} from 'enzyme'
+import {shallow, mount} from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import Note from './Note'
 import Togglable from './Togglable'
@@ -30,5 +30,22 @@ describe('<Togglable />', ()=> {
     button.at(0).simulate('click')
     const div=togglableComponent.find('.togglableContent')
     expect(div.getElement().props.style).toEqual({display:''})
+  })
+
+  it('shallow renders only one level', ()=> {
+    const note1={
+      content: 'komponenttitestaus tapahtuu jestillä ja enzymellä',
+      important: true
+    }
+    const note2={
+      content: 'shallow ei renderöi alikomponentteja',
+      important: true
+    }
+    const togglableComponent=mount(
+      <Togglable buttonLabel="show...">
+        <Note note={note1} />
+        <Note note={note2} />
+      </Togglable>
+    )
   })
 })

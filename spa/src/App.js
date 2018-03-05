@@ -1,6 +1,7 @@
 import React from 'react'
 import Note from './components/Note'
 import Togglable from './components/Togglable'
+import NoteForm from './components/NoteForm'
 import noteService from './services/notes'
 import loginService from './services/login'
 import PropTypes from 'prop-types'
@@ -47,21 +48,6 @@ LoginForm.propTypes={
   handleChange: PropTypes.func.isRequired,
   username: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired
-}
-const NoteForm=({onSubmit, handleChange, value})=> {
-  return (
-  <div>
-    <h2>Luo uusi muistiinpano</h2>
-
-    <form onSubmit={onSubmit}>
-      <input
-        value={value}
-        onChange={handleChange}
-      />
-      <button type="submit">tallenna</button>
-    </form>
-  </div>
-  )
 }
 
 Togglable.propTypes = {
