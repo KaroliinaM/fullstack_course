@@ -43,7 +43,12 @@ export const createAnecdote=(content)=>{
       votes:0
     }
   }
-
+}
+export const voteForAnecdote=(id)=>{
+  return {
+    type: 'VOTE',
+    id
+  }
 }
 
 export default anecdoteReducer
