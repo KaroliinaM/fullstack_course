@@ -1,51 +1,40 @@
 import React from 'react'
 import {importanceToggling} from './../reducers/noteReducer'
 import Note from './Note'
-import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
 
-class NoteList extends React.Component {
-  componentDidMount() {
-    console.log('mount')
-
-    const { store } = this.context
-    this.unsubscribe = store.subscribe(() =>
-        this.forceUpdate()
-    )
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe()
-  }
-  toggleImportance=(id)=>(e)=>{
-    this.context.store.dispatch(importanceToggling(id))
-  }
-  render() {
-    const notesToShow=()=> {
-      const {notes, filter}=this.context.store.getState()
-      if(filter==='ALL') {
-        return notes
-      }
-      return filter === 'IMPORTANT'
-        ? notes.filter(note=>note.important)
-        : notes.filter(note=>!note.important)
-    }
-
-    return(
+const NoteList=(props)=> (
       <ul>
-        {notesToShow().map(note=>
+        {props.visibleNotes.map(note=>
           <Note
             key={note.id}
             note= {note}
-            handleClick={this.toggleImportance(note.id)}
+            handleClick={()=>props.importanceToggling(note.id)}
           />
 
         )}
       </ul>
     )
+
+const notesToShow=(notes, filter)=> {
+  if(filter==='ALL') {
+    return notes
   }
-}
-NoteList.contextTypes = {
-  store: PropTypes.object
+  return filter === 'IMPORTANT'
+    ? notes.filter(note=>note.important)
+    : notes.filter(note=>!note.important)
 }
 
-export default NoteList
+const mapStateToProps=(state)=>{
+  return{
+    visibleNotes: notesToShow(state.notes, state.filter)
+  }
+}
+
+const ConnectedNoteList=connect(
+  mapStateToProps,
+  {importanceToggling}
+)(NoteList)
+
+
+export default ConnectedNoteList

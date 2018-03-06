@@ -1,24 +1,14 @@
 import React from 'react'
 import {noteCreation} from './../reducers/noteReducer'
-import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
 
 class NoteForm extends React.Component {
-  componentDidMount() {
-    const { store } = this.context
-    this.unsubscribe = store.subscribe(() =>
-      this.forceUpdate()
-    )
-  }
 
-  componentWillUnmount() {
-    this.unsubscribe()
-}
   addNote=(event)=>{
     event.preventDefault()
 
-    this.context.store.dispatch(
-      noteCreation(event.target.note.value)
-    )
+    this.props.createTodo(event.target.note.value)
+
     event.target.note.value=''
   }
   render() {
@@ -31,7 +21,18 @@ class NoteForm extends React.Component {
   }
 
 }
-NoteForm.contextTypes = {
-  store: PropTypes.object
+
+const mapDispatchToProps=(dispatch)=>{
+  return{
+    createTodo: (value) =>{
+      dispatch(noteCreation(value))
+    }
+  }
 }
-export default NoteForm
+
+const ConnectedNoteForm=connect(
+  null,
+  mapDispatchToProps
+)(NoteForm)
+
+export default ConnectedNoteForm
