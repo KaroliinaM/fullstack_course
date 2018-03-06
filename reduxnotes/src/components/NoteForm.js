@@ -1,5 +1,5 @@
 import React from 'react'
-import {noteCreation} from './../reducers/noteReducer'
+import {createNew} from './../reducers/noteReducer'
 import {connect} from 'react-redux'
 import noteService from '../services/notes'
 
@@ -9,13 +9,12 @@ class NoteForm extends React.Component {
     event.preventDefault()
     const content=event.target.note.value
     event.target.note.value=''
-    const newNote=await noteService.createNew(content)
-    this.props.noteCreation(newNote)
+    this.props.createNew(content)
   }
   render() {
     return(
       <form onSubmit={this.addNote}>
-        <input name="note" />
+        <input name='note' />
         <button>lisää</button>
       </form>
     )
@@ -25,7 +24,7 @@ class NoteForm extends React.Component {
 
 const ConnectedNoteForm=connect(
   null,
-  {noteCreation}
+  {createNew}
 )(NoteForm)
 
 export default ConnectedNoteForm

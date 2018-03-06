@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {createAnecdote} from '../reducers/anecdoteReducer'
-import {notifyCreation} from '../reducers/notificationReducer'
+import {notify} from '../reducers/notificationReducer'
 import anecdoteService from '../services/anecdotes'
 
 class AnecdoteForm extends React.Component {
@@ -9,9 +9,8 @@ class AnecdoteForm extends React.Component {
     event.preventDefault()
     const content=event.target.anecdote.value
     event.target.anecdote.value= ''
-    const newAnecdote=await anecdoteService.create(content)
     this.props.createAnecdote(content)
-    this.props.notifyCreation(content)
+    this.props.notify(`Anecdote ${content} created`)
 
   }
   render() {
@@ -28,7 +27,7 @@ class AnecdoteForm extends React.Component {
 }
 const ConnectAnecdoteForm=connect(
   null,
-  {createAnecdote, notifyCreation}
+  {createAnecdote, notify}
 )(AnecdoteForm)
 
 export default ConnectAnecdoteForm

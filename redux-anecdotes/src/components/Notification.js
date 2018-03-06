@@ -1,18 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {emptyNotification} from '../reducers/notificationReducer'
+import {notify} from '../reducers/notificationReducer'
 
 class Notification extends React.Component {
-  returnDefault=()=>{
-    if(this.props.notification !== ''){
-      setTimeout(() => {
-        this.props.emptyNotification()
-      }, 5000)
-    }
-  }
+
 
   render() {
-    this.returnDefault()
 
 
 
@@ -38,7 +31,7 @@ const mapStateToProps=(state)=>{
 
 const ConnectNotification=connect(
   mapStateToProps,
-  {emptyNotification}
+  {notify}
 )(Notification)
 
 export default ConnectNotification

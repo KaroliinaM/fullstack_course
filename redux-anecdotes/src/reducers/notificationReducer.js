@@ -2,30 +2,27 @@
 
 const notificationReducer=(state='', action)=>{
   switch(action.type) {
-    case 'CREATE' :
+    case 'NOTIFY' :
       return action.content
     default :
       return state
   }
 }
 
-export const notifyCreation=(content)=>{
-  return{
-    type:'CREATE',
-    content: "note "+content + " created"
-  }
+export const notify=(content)=>{
+  return async(dispatch)=>{
+  dispatch({
+    type:'NOTIFY',
+    content
+  })
+  setTimeout(() => {
+    dispatch({
+      type:'NOTIFY',
+      content: ''
+    })
+  }, 5000)
 }
-export const notifyVote=(content)=>{
-  return{
-    type: 'CREATE',
-    content: "vote for: " + content
-  }
-}
-export const emptyNotification=()=>{
-  return{
-    type: 'CREATE',
-    content: ''
-  }
+
 }
 
 export default notificationReducer

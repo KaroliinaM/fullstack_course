@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {voteForAnecdote} from '../reducers/anecdoteReducer'
-import {notifyVote} from '../reducers/notificationReducer'
+import {notify} from '../reducers/notificationReducer'
 import Filter from './Filter'
 import anecdoteService from '../services/anecdotes'
 
@@ -32,9 +32,8 @@ class AnecdoteList extends React.Component {
 }
 const vote=(anecdote, props)=>{
   return async ()=>{
-    const vote=await anecdoteService.vote(anecdote)
-    props.voteForAnecdote(anecdote.id)
-    props.notifyVote(anecdote.content)
+    props.voteForAnecdote(anecdote)
+    props.notify(`Vote for ${anecdote.content}`)
   }
 }
 
@@ -55,7 +54,7 @@ const mapStateToProps=(state)=>{
 
 const ConnectedAnecdoteList=connect(
   mapStateToProps,
-  {voteForAnecdote, notifyVote}
+  {voteForAnecdote, notify}
 )(AnecdoteList)
 
 export default ConnectedAnecdoteList

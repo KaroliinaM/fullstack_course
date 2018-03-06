@@ -9,8 +9,7 @@ import anecdoteService from './services/anecdotes'
 
 class App extends React.Component {
   componentDidMount=async()=>{
-    const anecdotes= await anecdoteService.getAll()
-    this.props.anecdotesInit(anecdotes)
+    this.props.anecdotesInit()
   }
   render() {
     return (
