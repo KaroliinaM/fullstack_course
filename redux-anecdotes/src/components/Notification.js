@@ -1,11 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
+import {emptyNotification} from '../reducers/notificationReducer'
 
 class Notification extends React.Component {
   returnDefault=()=>{
-    if(this.context.store.getState().notification !== ''){
+    if(this.props.notification !== ''){
       setTimeout(() => {
-        this.context.store.dispatch({type:'VOTED', content: ''})
+        this.props.emptyNotification()
       }, 5000)
     }
   }
@@ -22,13 +23,22 @@ class Notification extends React.Component {
     }
     return (
       <div style={style}>
-        {this.context.store.getState().notification}
+        {this.props.notification}
       </div>
     )
   }
 }
-Notification.contextTypes={
-  store: PropTypes.object
+const mapStateToProps=(state)=>{
+  return {
+    anecdotes: state.anecdotes,
+    notification: state.notification,
+    filter: state.filter
+  }
 }
 
-export default Notification
+const ConnectNotification=connect(
+  mapStateToProps,
+  {emptyNotification}
+)(Notification)
+
+export default ConnectNotification

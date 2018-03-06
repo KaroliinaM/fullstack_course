@@ -1,15 +1,11 @@
+import noteService from '../services/notes'
 
-
-const initialState=[
-  {content: 'redux storen toiminaan määrittelee reduceri', important: true, id:1 },
-  {content: 'Storen tilassa voi olla mielivaltaista dataa', important: false, id: 2}
-]
-
-
-const noteReducer = (state=initialState, action) => {
+const noteReducer = (state=[], action) => {
   switch (action.type) {
     case 'NEW_NOTE' :
       return [...state, action.data]
+    case 'INIT_NOTES' :
+      return action.data
     case 'TOGGLE_IMPORTANCE' :
       const id=action.data.id
       const noteToChange=state.find(n=>n.id===id)
@@ -23,22 +19,29 @@ const noteReducer = (state=initialState, action) => {
 const generateId=()=> Number((Math.random() * 1000000).toFixed(0))
 
 
-export const noteCreation=(content)=> {
+export const noteCreation=(data)=> {
     return {
       type: 'NEW_NOTE',
-      data: {
-        content,
-        important: false,
-        id: generateId()
-      }
+      data
     }
   }
 export const importanceToggling=(id)=> {
-    return {
-      type: 'TOGGLE_IMPORTANCE',
-      data: { id }
-    }
+  return {
+    type: 'TOGGLE_IMPORTANCE',
+    data: { id }
   }
+}
+export const noteInitialization=()=>{
+  return async(dispatch)=>{
+    const notes=await noteService.getAll()
+    dispatch({
+      type: 'INIT_NOTES',
+      data: notes
+    })
+  }
+}
+
+
 
 
 

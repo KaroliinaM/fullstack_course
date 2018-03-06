@@ -1,13 +1,17 @@
-import React from 'react';
-import {createAnecdote, voteForAnecdote} from './reducers/anecdoteReducer'
-import PropTypes from 'prop-types'
+import React from 'react'
 import Notification from './components/Notification'
-import Filter from './components/Filter'
 import AnecdoteForm from './components/AnecdoteForm'
 import AnecdoteList from './components/AnecdoteList'
-import {notifyCreation, notifyVote} from './reducers/notificationReducer'
+import {connect} from 'react-redux'
+import {anecdotesInit} from './reducers/anecdoteReducer'
+import anecdoteService from './services/anecdotes'
+
 
 class App extends React.Component {
+  componentDidMount=async()=>{
+    const anecdotes= await anecdoteService.getAll()
+    this.props.anecdotesInit(anecdotes)
+  }
   render() {
     return (
       <div>
@@ -18,8 +22,10 @@ class App extends React.Component {
     )
   }
 }
-App.contextTypes={
-  store: PropTypes.object
-}
 
-export default App
+
+export default connect(
+  null,
+  {anecdotesInit}
+
+)(App)

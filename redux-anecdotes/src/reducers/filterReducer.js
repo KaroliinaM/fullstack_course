@@ -7,7 +7,12 @@ const filterReducer=(state='', action)=>{
       return state
   }
 
-  return state
+}
+export const filterData=(content)=>{
+  return {
+    type:'FILTER',
+    data: content
+  }
 }
 
 export default filterReducer

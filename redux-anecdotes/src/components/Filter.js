@@ -1,9 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
+import {filterData} from '../reducers/filterReducer'
 
 class Filter extends React.Component {
   handleChange = (event) => {
-    this.context.store.dispatch({type:'FILTER', data: event.target.value})
+    this.props.filterData(event.target.value)
 
     // input-kentän arvo muuttujassa event.target.value
   }
@@ -19,8 +20,10 @@ class Filter extends React.Component {
     )
   }
 }
-Filter.contextTypes={
-  store: PropTypes.object
-}
 
-export default Filter
+const ConnectFilter=connect(
+  null,
+  {filterData}
+)(Filter)
+
+export default ConnectFilter
