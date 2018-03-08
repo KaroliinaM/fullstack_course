@@ -9,7 +9,7 @@ const notificationReducer=(state='', action)=>{
   }
 }
 
-export const notify=(content)=>{
+export const notify=(content, timer)=>{
   return async(dispatch)=>{
   dispatch({
     type:'NOTIFY',
@@ -20,7 +20,7 @@ export const notify=(content)=>{
       type:'NOTIFY',
       content: ''
     })
-  }, 5000)
+  }, 1000*timer)
 }
 
 }

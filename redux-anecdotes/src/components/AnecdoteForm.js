@@ -10,7 +10,7 @@ class AnecdoteForm extends React.Component {
     const content=event.target.anecdote.value
     event.target.anecdote.value= ''
     this.props.createAnecdote(content)
-    this.props.notify(`Anecdote ${content} created`)
+    this.props.notify(`Anecdote ${content} created`, 5)
 
   }
   render() {

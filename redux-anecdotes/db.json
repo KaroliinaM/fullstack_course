@@ -32,7 +32,7 @@
     },
     {
       "content": "Uusi an",
-      "votes": 4,
+      "votes": 5,
       "id": "rXkdbYp"
     },
     {
@@ -44,6 +44,11 @@
       "content": "Luodaan taas uusi",
       "votes": 0,
       "id": "Z~9AQRf"
+    },
+    {
+      "content": "Uusi muistiinpano",
+      "votes": 0,
+      "id": "oTuJp4d"
     }
   ]
 }

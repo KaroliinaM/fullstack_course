@@ -1,94 +1,23 @@
 import React from 'react'
+import Menu from './components/Menu'
+import AnecdoteList from './components/AnecdoteList'
+import CreateNew from './components/CreateNew'
+import Footer from './components/Footer'
+import About from './components/About'
+import Anecdote from './components/Anecdote'
+import Notification from './components/Notification'
+
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
+import {Jumbotron, Button} from 'react-bootstrap'
 
-const Menu = () => (
-  <div>
-    <Link to="/anecdotes">anecdotes</Link>&nbsp;
-    <Link to="/create">create new</Link>&nbsp;
-    <Link to="/about">about</Link>&nbsp;
-  </div>
-)
-
-const AnecdoteList = ({ anecdotes }) => (
-  <div>
-    <h2>Anecdotes</h2>
-    <ul>
-      {anecdotes.map(anecdote => <li key={anecdote.id} >{anecdote.content}</li>)}
-    </ul>
-  </div>
-)
-
-const About = () => (
-  <div>
-    <h2>About anecdote app</h2>
-    <p>According to Wikipedia:</p>
-
-    <em>An anecdote is a brief, revealing account of an individual person or an incident.
-      Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself,
-      such as to characterize a person by delineating a specific quirk or trait, to communicate an abstract idea about a person, place, or thing through the concrete details of a short narrative.
-      An anecdote is "a story with a point."</em>
-
-    <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
-  </div>
-)
-
-const Footer = () => (
-  <div>
-    Anecdote app for <a href='https://courses.helsinki.fi/fi/TKT21009/121540749'>Full Stack -sovelluskehitys</a>.
-
-    See <a href='https://github.com/mluukkai/routed-anecdotes'>https://github.com/mluukkai/routed-anecdotes</a> for the source code.
-  </div>
-)
-
-class CreateNew extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      content: '',
-      author: '',
-      info: ''
-    }
-  }
-
-  handleChange = (e) => {
-    console.log(e.target.name, e.target.value)
-    this.setState({ [e.target.name]: e.target.value })
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault()
-    this.props.addNew({
-      content: this.state.content,
-      author: this.state.author,
-      info: this.state.info,
-      votes: 0
-    })
-  }
-
-  render() {
-    return(
-      <div>
-        <h2>create a new anecdote</h2>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            content
-            <input name='content' value={this.state.content} onChange={this.handleChange} />
-          </div>
-          <div>
-            author
-            <input name='author' value={this.state.author} onChange={this.handleChange} />
-          </div>
-          <div>
-            url for more info
-            <input name='info' value={this.state.info} onChange={this.handleChange} />
-          </div>
-          <button>create</button>
-        </form>
-      </div>
-    )
-
-  }
+const headerStyle={
+  color:'Olive',
+  padding:'20px'
 }
+const style={
+  background:'LavenderBlush'
+}
+
 
 class App extends React.Component {
   constructor() {
@@ -111,13 +40,19 @@ class App extends React.Component {
           id: '2'
         }
       ],
-      notification: ''
+      notification: '',
+      notificationStyle: ''
     }
   }
 
   addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     this.setState({ anecdotes: this.state.anecdotes.concat(anecdote) })
+    console.log(anecdote)
+    this.notify(`A new anecdote ${anecdote.content} created!`, 'create')
+    setTimeout(()=>{
+      this.notify('', 'empty')
+    }, 5000)
   }
 
   anecdoteById = (id) =>
@@ -135,18 +70,32 @@ class App extends React.Component {
 
     this.setState({ anecdotes })
   }
+  notify=(teksti, type)=>{
+    this.setState({notification: teksti, notificationStyle: type})
+  }
 
   render() {
     return (
-      <div>
+      <div className="container" style={style}>
+
         <Router>
 
-        <div>
-        <h1>Software anecdotes</h1>
-          <Menu />
-          <Route exact path="/anecdotes" render={()=> <AnecdoteList anecdotes={this.state.anecdotes} />} />
+        <div >
+
+        <h1 style={headerStyle}>Software anecdotes</h1>
+        <Menu />
+
+          <Notification notification={this.state.notification} type={this.state.notificationStyle}/>
+          <Route exact path="/" render={()=>
+            <AnecdoteList anecdotes={this.state.anecdotes} />}
+          />
+          <Route path="/anecdotes/:id" render={({match})=>
+           <Anecdote anecdote={this.anecdoteById(match.params.id)} />}
+          />
           <Route path="/about" render={()=> <About />} />
-          <Route path="/create" render={()=> <CreateNew addNew={this.addNew}/>} />
+          <Route path="/create" render={({history})=>
+            <CreateNew history={history} addNew={this.addNew}/>}
+          />
         <Footer />
         </div>
         </Router>

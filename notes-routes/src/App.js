@@ -8,6 +8,7 @@ import Note from './components/Note'
 import Notes from './components/Notes'
 import Users from './components/Users'
 import Login from './components/Login'
+import {Alert} from 'react-bootstrap'
 
 class App extends React.Component {
   constructor() {
@@ -33,11 +34,16 @@ class App extends React.Component {
           user: 'Arto Hellas'
         }
       ],
-      user: null
+      user: null,
+      message: ''
     }
   }
 
   login = (user) => {
+    this.setState({user, message: `Welcome ${user}`})
+    setTimeout(()=>{
+      this.setState({message:null})
+    }, 10000)
     this.setState({user})
   }
 
@@ -46,9 +52,10 @@ class App extends React.Component {
       this.state.notes.find(note => note.id === Number(id))
 
     return (
-      <div>
+      <div className="container">
         <Router>
           <div>
+          <Alert color="success">{this.state.message}</Alert>
             <div>
               <Link to="/">home</Link> &nbsp;
               <Link to="/notes">notes</Link> &nbsp;

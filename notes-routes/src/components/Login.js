@@ -1,4 +1,6 @@
 import React from 'react'
+import { Table, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
+
 
 const Login = ({onLogin, history}) => {
   const onSubmit = (event) => {
@@ -10,13 +12,13 @@ const Login = ({onLogin, history}) => {
   <div>
     <h2>login</h2>
     <form onSubmit={onSubmit}>
-      <div>
-        username: <input />
-      </div>
-      <div>
-        password: <input type='password'/>
-      </div>
-      <button type="submit">login</button>
+    <FormGroup>
+    <ControlLabel>username:</ControlLabel>
+    <FormControl type="text" name="username" />
+    <ControlLabel>password:</ControlLabel>
+     <FormControl type="password" />
+    <Button bsStyle="success" type="submit">login</Button>
+      </FormGroup>
     </form>
   </div>
 )}

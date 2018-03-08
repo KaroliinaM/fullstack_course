@@ -3,17 +3,25 @@ import {
   BrowserRouter as Router,
   Route, Link, Redirect
 } from 'react-router-dom'
+import {Table} from 'react-bootstrap'
 
 const Notes = ({notes}) => (
-  <div>
+  <div className="container">
     <h2>Notes</h2>
-    <ul>
+    <Table>
+    <tbody>
       {notes.map(note=>
-        <li key={note.id}>
+        <tr key={note.id}>
+        <td>
           <Link to={`/notes/${note.id}`}>{note.content}</Link>
-        </li>
+        </td>
+        <td>
+          {note.user}
+        </td>
+        </tr>
       )}
-    </ul>
+      </tbody>
+    </Table>
   </div>
 )
 export default Notes

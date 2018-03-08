@@ -33,7 +33,7 @@ class AnecdoteList extends React.Component {
 const vote=(anecdote, props)=>{
   return async ()=>{
     props.voteForAnecdote(anecdote)
-    props.notify(`Vote for ${anecdote.content}`)
+    props.notify(`Vote for ${anecdote.content}`, 5)
   }
 }
 
